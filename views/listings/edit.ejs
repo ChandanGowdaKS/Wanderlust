@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit list</title>
+</head>
+<body>
+    <h3>Edit :<%= editingList.title %></h3>
+    <form method = "post" action = "/listings/<%= editingList._id %>?_method=PUT">
+        <ul>
+            <b>Title: <input name = "title" type="text" value = "<%= editingList.title %>"></b>
+            <br>
+            <p><b>Description: </p>
+            <textarea name ="description" rows ="10" cols ="50" type="text" ><%=editingList.description %></textarea>
+            <br>
+            <br>   
+            <img src="<%= editingList.image.url %>" width="250">
+
+            <br><br>
+
+    <label>Image URL</label>
+    <input
+    type="text"
+    name="image[url]"
+    value="<%= editingList.image.url %>"
+    >
+    <br><br>
+                <label>File name</label>
+    <input
+    type="String"
+    name="image[filename]"
+    value="<%= editingList.image.filename %>"
+    >
+            <br><br> 
+            <b>Price:</b><input name = "price" type = "number" value = "<%=editingList.price %>">
+            <br><br>
+            <b>Location: <input name ="location" type="text" value = "<%=editingList.location %>"> </b>
+            <br><br>
+            <b>Country: <input name = "country" type="text" value = "<%=editingList.country %>"></b>
+            <br><br>
+        <button> Edit List</button> 
+        </ul>
+        
+    </form>
+</body>
+</html>
