@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const listing = require("./modules/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");   
+const ejsMate = require("ejs-mate");
+
 
 
 main().then(() => {
@@ -38,6 +40,8 @@ app.get("/",(req, res)=> {
 })
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+app.engine("ejs", ejsMate);
+app.use(express.static(path.join(__dirname, "/public")));
 
 //index Route
 
