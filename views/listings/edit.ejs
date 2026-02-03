@@ -1,47 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit list</title>
-</head>
+
+<%- layout("./layouts/boilerplate.ejs") %>
 <body>
+    <div class="row mt-3">
+        <div class="col-8 offset-2">
     <h3>Edit :<%= editingList.title %></h3>
     <form method = "post" action = "/listings/<%= editingList._id %>?_method=PUT">
-        <ul>
-            <b>Title: <input name = "title" type="text" value = "<%= editingList.title %>"></b>
-            <br>
-            <p><b>Description: </p>
-            <textarea name ="description" rows ="10" cols ="50" type="text" ><%=editingList.description %></textarea>
-            <br>
-            <br>   
-            <img src="<%= editingList.image.url %>" width="250">
+        <div class="mb-3">
+        <label for="title" class="form-label fw-bold">Title :</label>
+        <input name = "title" type="text" value = "<%= editingList.title %>" class="form-control"></b>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label fw-bold">Description :</label>
+            <textarea name ="description" rows ="5" cols ="20" type="text" class="form-control" ><%=editingList.description %></textarea>
+            </div>  
+            <div class="mb-3">
+            
+            <img src="<%= editingList.image.url %>" class="rounded-3" width="250">
+            </div>
+        <div class="mb-3">
+            <label for="image[url]" class="form-label fw-bold" >Image URl :</label>
+            <input
+            type="text"
+            name="image[url]"  class="form-control" 
+            value="<%= editingList.image.url %>">
+    </div>
+    <div class="mb-3">
+            <label for="image[filename]" class="form-label fw-bold">File name:</label>
+            <input
+            type="String"
+            name="image[filename]" class="form-control"
+            value="<%= editingList.image.filename %>"
+            >
+    </div>
+    <div class="row">
 
-            <br><br>
 
-    <label>Image URL</label>
-    <input
-    type="text"
-    name="image[url]"
-    value="<%= editingList.image.url %>"
-    >
-    <br><br>
-                <label>File name</label>
-    <input
-    type="String"
-    name="image[filename]"
-    value="<%= editingList.image.filename %>"
-    >
-            <br><br> 
-            <b>Price:</b><input name = "price" type = "number" value = "<%=editingList.price %>">
-            <br><br>
-            <b>Location: <input name ="location" type="text" value = "<%=editingList.location %>"> </b>
-            <br><br>
-            <b>Country: <input name = "country" type="text" value = "<%=editingList.country %>"></b>
-            <br><br>
-        <button> Edit List</button> 
-        </ul>
+    <div class="mb-3 col-md-4">
+            <label for="price" class="form-label fw-bold">Price:</label>
+            <input name = "price" type = "number" value = "<%=editingList.price %>" class="form-control">
+            
+    </div>
+    <div class="mb-3 col-md-8">
+            <label for="country" class="form-label fw-bold">Country:</label>
+            <input name = "country" type="text" value = "<%=editingList.country %>" class="form-control"></b>
+        </div>
+    </div>
+        <div class="mb-3">
+            <label for="location" class="form-label fw-bold">Location :</label>
+            <input name ="location" type="text" value = "<%=editingList.location %>" class="form-control">
+        </div>
+        
+         <div class="mb-3">
+        <button class="btn btn-dark"> Edit List</button> 
+       </div>
         
     </form>
+     </div>
+    </div>
 </body>
-</html>

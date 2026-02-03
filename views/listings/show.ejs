@@ -1,13 +1,14 @@
 <% layout("/layouts/boilerplate") -%>
 <body>
-    <h3>All Information about <%=list.title  %></h3>
+    <h3 class="text-primary">All Information about <%=list.title  %></h3>
+    <br><br>
     <ul>
 
     <li> <b> Place: <i><%= list.title %></li></i></b>
     <br>
     <li> <%= list.description %></li><br>
     <li><%= list.image.filename %></li><br>
-    <img src="<%= list.image.url %>" width="250" ><br><br>
+    <img src="<%= list.image.url %>" width="250" class = "rounded-4"><br><br>
     <li> &#8377 <%=list.price.toLocaleString("en-IN") %></li><br>
     <li> <%=list.location %></li><br>
     <li> <%=list.country %></li>
@@ -17,6 +18,8 @@
 <br> <br>
 <form method = "POST" action = "/listings/<%= list._id %>?_method=DELETE">
     <button>Delete this List</button>
+    <br>
+    <br>
 </form>
 
 </body>
