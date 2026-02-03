@@ -1,2 +1,2 @@
-# Airnb
-Building a full stack Airnb Clone web
+# Airbnb
+Building a full-stack Airbnb Clone web
