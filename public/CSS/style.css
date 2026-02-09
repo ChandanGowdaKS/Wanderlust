@@ -76,3 +76,11 @@ body{
 .card-img-top:hover{
     opacity:0.8;
 }
+
+/* Show page */
+.show-img{
+    height:30vh;
+}
+.btns{
+    display:flex;
+}

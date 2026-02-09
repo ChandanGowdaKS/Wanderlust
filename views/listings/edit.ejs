@@ -7,11 +7,11 @@
     <form method = "post" action = "/listings/<%= editingList._id %>?_method=PUT">
         <div class="mb-3">
         <label for="title" class="form-label fw-bold">Title :</label>
-        <input name = "title" type="text" value = "<%= editingList.title %>" class="form-control"></b>
+        <input name = "title" id = "title" type="text" value = "<%= editingList.title %>" class="form-control"></b>
         </div>
         <div class="mb-3">
             <label for="description" class="form-label fw-bold">Description :</label>
-            <textarea name ="description" rows ="5" cols ="20" type="text" class="form-control" ><%=editingList.description %></textarea>
+            <textarea name ="description" id = "description" rows ="5" cols ="20" type="text" class="form-control" ><%=editingList.description %></textarea>
             </div>  
             <div class="mb-3">
             
@@ -21,14 +21,14 @@
             <label for="image[url]" class="form-label fw-bold" >Image URl :</label>
             <input
             type="text"
-            name="image[url]"  class="form-control" 
+            name="image[url]" id = "image[url]" class="form-control" 
             value="<%= editingList.image.url %>">
     </div>
     <div class="mb-3">
             <label for="image[filename]" class="form-label fw-bold">File name:</label>
             <input
             type="String"
-            name="image[filename]" class="form-control"
+            name="image[filename]" id = "image[filename]" class="form-control"
             value="<%= editingList.image.filename %>"
             >
     </div>
@@ -37,17 +37,17 @@
 
     <div class="mb-3 col-md-4">
             <label for="price" class="form-label fw-bold">Price:</label>
-            <input name = "price" type = "number" value = "<%=editingList.price %>" class="form-control">
+            <input name = "price" id = "price" type = "number" value = "<%=editingList.price %>" class="form-control">
             
     </div>
     <div class="mb-3 col-md-8">
             <label for="country" class="form-label fw-bold">Country:</label>
-            <input name = "country" type="text" value = "<%=editingList.country %>" class="form-control"></b>
+            <input name = "country" id = "country" type="text" value = "<%=editingList.country %>" class="form-control"></b>
         </div>
     </div>
         <div class="mb-3">
             <label for="location" class="form-label fw-bold">Location :</label>
-            <input name ="location" type="text" value = "<%=editingList.location %>" class="form-control">
+            <input name ="location" id = "location" type="text" value = "<%=editingList.location %>" class="form-control">
         </div>
         
          <div class="mb-3">
