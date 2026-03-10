@@ -4,15 +4,17 @@
     <div class="row mt-3">
         <div class="col-8 offset-2">
     <h3>Edit :<%= editingList.title %></h3>
-    <form method = "post" action = "/listings/<%= editingList._id %>?_method=PUT">
+    <form method = "post" action = "/listings/<%= editingList._id %>?_method=PUT" novalidate class ="needs-validation">
         <div class="mb-3">
         <label for="title" class="form-label fw-bold">Title :</label>
-        <input name = "title" id = "title" type="text" value = "<%= editingList.title %>" class="form-control"></b>
+        <input name = "listing[title]" id = "title" type="text" value = "<%= editingList.title %>" class="form-control" required></b>
+        <div class="invalid-feedback">Please enter the Title</div>
         </div>
         <div class="mb-3">
             <label for="description" class="form-label fw-bold">Description :</label>
-            <textarea name ="description" id = "description" rows ="5" cols ="20" type="text" class="form-control" ><%=editingList.description %></textarea>
-            </div>  
+            <textarea name ="listing[description]" id = "description" rows ="5" cols ="20" type="text" class="form-control" required ><%=editingList.description %></textarea>
+        <div class="invalid-feedback">Please enter the Description</div>    
+        </div>  
             <div class="mb-3">
             
             <img src="<%= editingList.image.url %>" class="rounded-3" width="250">
@@ -21,33 +23,37 @@
             <label for="image[url]" class="form-label fw-bold" >Image URl :</label>
             <input
             type="text"
-            name="image[url]" id = "image[url]" class="form-control" 
+            name="listing[image][url]" id = "image[url]" class="form-control" required
             value="<%= editingList.image.url %>">
+            <div class="invalid-feedback">Please enter the valid image URL</div>
     </div>
     <div class="mb-3">
             <label for="image[filename]" class="form-label fw-bold">File name:</label>
             <input
             type="String"
-            name="image[filename]" id = "image[filename]" class="form-control"
+            name="listing[image][filename]" id = "image[filename]" class="form-control" required
             value="<%= editingList.image.filename %>"
             >
+            <div class="invalid-feedback">Please enter the valid filename</div>
     </div>
     <div class="row">
 
 
     <div class="mb-3 col-md-4">
             <label for="price" class="form-label fw-bold">Price:</label>
-            <input name = "price" id = "price" type = "number" value = "<%=editingList.price %>" class="form-control">
-            
+            <input name = "listing[price]" id = "price" type = "numb er" value = "<%=editingList.price %>" class="form-control" required>
+            <div class="invalid-feedback">Please enter the valid price</div>
     </div>
     <div class="mb-3 col-md-8">
             <label for="country" class="form-label fw-bold">Country:</label>
-            <input name = "country" id = "country" type="text" value = "<%=editingList.country %>" class="form-control"></b>
+            <input name = "listing[country]" id = "country" type="text" value = "<%=editingList.country %>" class="form-control" required></b>
+            <div class="invalid-feedback">Please enter the Country</div>
         </div>
     </div>
         <div class="mb-3">
             <label for="location" class="form-label fw-bold">Location :</label>
-            <input name ="location" id = "location" type="text" value = "<%=editingList.location %>" class="form-control">
+            <input name ="listing[location]" id = "location" type="text" value = "<%=editingList.location %>" class="form-control" required>
+            <div class="invalid-feedback">Please enter the Location</div>
         </div>
         
          <div class="mb-3">
