@@ -10,6 +10,7 @@ const ExpressError = require("./utils/ExpressError.js");
 const {listingSchema, reviewSchema} = require("./schema.js");
 const Review = require("./models/review.js");
 const listings = require("./routes/listing.js");
+const reviews = require("./routes/review.js");
 
 
 main().then(() => {
@@ -52,38 +53,14 @@ app.get("/", WrapAsync(async (req, res,next) => {
 
 
 
-// validate review
-const validateReview = (req, res, next) => {
-    let { error } = reviewSchema.validate(req.body);
-    if (error) {
-        throw new ExpressError(400, error);
-    } else {
-        next();
-    }
-};
 
 // listings route in route folder
 app.use("/listings",listings)
 
-// review route
-app.post("/listings/:id/reviews", validateReview, WrapAsync(async (req, res) => {
-    let list = await listing.findById(req.params.id);
-    let newReview = new Review(req.body.review);
-    
-    list.reviews.push(newReview);
-    await newReview.save();
-    await list.save();
-    
-    res.redirect(`/listings/${list._id}`);
-}));
 
-// Delete review route
-app.delete("/listings/:id/reviews/:reviewId", WrapAsync(async (req, res) => {
-    let { id, reviewId } = req.params;
-    await listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
-    await Review.findByIdAndDelete(reviewId);
-    res.redirect(`/listings/${id}`);
-}));
+// listings of review in route folder
+
+app.use("/listings/:id/reviews", reviews);
 
 // error handling for not found pages
 app.use((req, res, next) => {
@@ -94,7 +71,6 @@ app.use((req, res, next) => {
 //custom middleware to handle error
 app.use((err, req, res, next) => {
     let { statusCode = 500, message = "Something went wrong" } = err;
-    // res.status(statusCode).send(message);
     res.status(statusCode).render("error.ejs", { message }); 
 });
 
