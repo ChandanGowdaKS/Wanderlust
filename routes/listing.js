@@ -32,18 +32,21 @@ router.post("/", validationListing,WrapAsync(async (req, res, next) => {
     let newList = await new listing(req.body.listing);
 
         await newList.save();
-        // console.log(newList);
+    req.flash("success", "New Listing Created");
         res.redirect("/listings");
     } 
     
 
 ));
 
-// particular list show route
+// particular list show route // Show Route
 router.get("/:id",WrapAsync( async (req, res, next) => {
     let { id } = req.params;
     let list = await listing.findById(id).populate("reviews");
-    // console.log(list);
+    if (!list) {
+        req.flash("error", "Listing doesn't exist");
+        return res.redirect("/listings");
+    };
     res.render("listings/show.ejs", { list });
 }));
 
@@ -51,6 +54,11 @@ router.get("/:id",WrapAsync( async (req, res, next) => {
 router.get("/:id/edit", WrapAsync(async (req, res, next) => {
     let { id } = req.params;
     const editingList = await listing.findById(id);
+    if (!editingList) {
+        req.flash("error", "Listing doesn't exist");
+        return res.redirect("/listings");
+    }
+    
     res.render("listings/edit.ejs", { editingList });
 }));
 
@@ -58,8 +66,12 @@ router.get("/:id/edit", WrapAsync(async (req, res, next) => {
 router.put("/:id", validationListing,WrapAsync(async (req, res, next) => {
   const { id } = req.params;
 
-  await listing.findByIdAndUpdate(id,{ ...req.body.listing});
-
+    const updatedListing = await listing.findByIdAndUpdate(id,{ ...req.body.listing});
+    if (!updatedListing) {
+        req.flash("error", "Listing doesn't exist");
+        return res.redirect("/listings");
+    }
+        req.flash("success", " Listing edited Successfully");
   res.redirect(`/listings/${id}`);
 }));
 
@@ -68,7 +80,11 @@ router.put("/:id", validationListing,WrapAsync(async (req, res, next) => {
 router.delete("/:id", WrapAsync(async (req, res, next) => {
     let { id } = req.params;
     const deletedList = await listing.findByIdAndDelete(id);
-    console.log(deletedList);
+    if (!deletedList) {
+        req.flash("error", "Listing doesn't exist");
+        return res.redirect("/listings");
+    }
+    req.flash("deleted", `${deletedList.title} listing deleted Successfully` );
     res.redirect("/listings");
 }));
 
