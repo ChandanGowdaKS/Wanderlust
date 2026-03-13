@@ -9,10 +9,17 @@ const WrapAsync = require("./utils/WrapAsync");
 const ExpressError = require("./utils/ExpressError.js");
 const {listingSchema, reviewSchema} = require("./schema.js");
 const Review = require("./models/review.js");
-const listings = require("./routes/listing.js");
-const reviews = require("./routes/review.js");
+
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js"); 
+
+// Routes
+const listingRouter = require("./routes/listing.js");
+const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
 
 main().then(() => {
     console.log("DB connected");
@@ -61,6 +68,14 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
+// passport for user authentication   // pbkdf2 hashing algorithm
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.deleted = req.flash("deleted"); 
@@ -78,12 +93,16 @@ app.get("/", WrapAsync(async (req, res,next) => {
 
 
 // listings route in route folder
-app.use("/listings",listings)
+app.use("/listings",listingRouter)
 
 
 // listings of review in route folder
 
-app.use("/listings/:id/reviews", reviews);
+app.use("/listings/:id/reviews", reviewRouter);
+
+// user router
+
+app.use("/", userRouter);
 
 // error handling for not found pages
 app.use((req, res, next) => {
