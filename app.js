@@ -7,8 +7,6 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const WrapAsync = require("./utils/WrapAsync");
 const ExpressError = require("./utils/ExpressError.js");
-const {listingSchema, reviewSchema} = require("./schema.js");
-const Review = require("./models/review.js");
 
 const session = require("express-session");
 const flash = require("connect-flash");
@@ -20,6 +18,9 @@ const User = require("./models/user.js");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+
+// middlewares
+const { validationListing, } = require("./middleware.js");
 
 main().then(() => {
     console.log("DB connected");
@@ -80,6 +81,7 @@ app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.deleted = req.flash("deleted"); 
     res.locals.error = req.flash("error"); 
+    res.locals.currUser = req.user;
     next();
 });
 
