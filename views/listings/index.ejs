@@ -9,7 +9,7 @@
 <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
 <%  for(let listings of allListings){ %>
     <div class="card listing-card">
-  <a href="/listings/<%= listings._id %>"><img src="<%= listings.image.url %>" class="card-img-top" alt ="all-listings" style="height: 18rem;"></a>
+  <a href="/listings/<%= listings._id %>"><img src="<%= listings.image && listings.image.url ? listings.image.url : 'https://cdn.pixabay.com/photo/2024/05/01/12/59/nature-8732304_1280.jpg' %>" class="card-img-top" alt ="all-listings" style="height: 18rem;"></a>
   <div class="card-body">
     <p><b class="card-title"><%= listings.title %></b></p>
     <!-- <p class="card-text"><%= listings.description %></p> -->

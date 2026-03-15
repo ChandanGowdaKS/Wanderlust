@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review.js");
 
+
 const listingSchema = mongoose.Schema({
     title: {
         type: String,
@@ -19,15 +20,10 @@ const listingSchema = mongoose.Schema({
     //         : v,
     // },
 
-    image: {
-  filename: {
-    type: String
-  },
-  url: {
-    type: String,
-    default: "https://cdn.pixabay.com/photo/2024/05/01/12/59/nature-8732304_1280.jpg"
-  },
-},
+  image: {
+    url: String,
+    filename:String,
+    },
 
     price: Number,
     location: String,
