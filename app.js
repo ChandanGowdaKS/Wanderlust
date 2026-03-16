@@ -101,10 +101,9 @@ app.use((req, res, next) => {
     next();
 });
 
-// app.get("/", WrapAsync(async (req, res,next) => {
-//     const allListings = await listing.find({});
-//     res.render("listings/index", { allListings });
-// }));
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+});
 
 
 
