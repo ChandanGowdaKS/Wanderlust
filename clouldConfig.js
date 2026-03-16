@@ -1,5 +1,5 @@
 const cloudinary = require('cloudinary').v2;
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const CloudinaryStorage = require('multer-storage-cloudinary');
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -14,11 +14,8 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: {
-    folder: 'Wanderlust',
-    allowedFormats: ["png","jpg","jpeg"] // supports promises as well
-
-  },
+  folder: 'Wanderlust',
+  allowedFormats: ["png", "jpg", "jpeg"],
 });
 
 module.exports = {
