@@ -1,12 +1,21 @@
 <% layout("/layouts/boilerplate") -%>
 <body>
-    <h3 style="margin: 14px;">All Listings</h3>
+    <h3 style="margin: 14px;">
+      <% if(searchLocation){ %>
+        Search results for "<%= searchLocation %>"
+      <% } else { %>
+        All Listings
+      <% } %>
+    </h3>
 
 <!-- <form method ="GET" action = "/listings/new">
     <button>Create new list</button>
 </form> -->
 
 <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+<% if (allListings.length === 0) { %>
+  <p style="margin: 14px;">No listings found for this location.</p>
+<% } %>
 <%  for(let listings of allListings){ %>
     <div class="card listing-card">
   <a href="/listings/<%= listings._id %>"><img src="<%= listings.image && listings.image.url ? listings.image.url : 'https://cdn.pixabay.com/photo/2024/05/01/12/59/nature-8732304_1280.jpg' %>" class="card-img-top" alt ="all-listings" style="height: 18rem;"></a>

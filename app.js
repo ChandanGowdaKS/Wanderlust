@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
 const mongoose = require("mongoose");
+
 const listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");   
@@ -12,10 +13,19 @@ const WrapAsync = require("./utils/WrapAsync");
 const ExpressError = require("./utils/ExpressError.js");
 
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js"); 
+
+process.on("unhandledRejection", (err) => {
+    console.error("UNHANDLED PROMISE REJECTION:", err);
+});
+
+process.on("uncaughtException", (err) => {
+    console.error("UNCAUGHT EXCEPTION:", err);
+});
 
 // Routes
 const listingRouter = require("./routes/listing.js");
@@ -25,30 +35,23 @@ const userRouter = require("./routes/user.js");
 // middlewares
 const { validationListing, } = require("./middleware.js");
 
-main().then(() => {
-    console.log("DB connected");
-}).catch((err) => {
-    console.log(err);
-});
+// mongo atlas key
+const dbUrl = (process.env.ATLASDB_URL || "").trim();
+if (!dbUrl) {
+    throw new Error("ATLASDB_URL is missing in environment variables");
+}
 
-async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/Wanderlust');
-};
-
-// sample testing
-
-// app.get("/testing", async (req, res) => {
-//     let sampleListing = new listing({
-//         title: "MoonSpace",
-//         description: "Easy to see all other planets",
-//         Price: 4000,
-//         location: "Bengaluru",
-//         country: "India",
-//     });
-//     console.log(sampleListing + "Saved");
-//     await sampleListing.save();
-//     res.send("Saved");
-// })
+mongoose.connect(dbUrl)
+    .then(() => {
+        console.log("DB connected");
+        mongoose.connection.on("error", (err) => {
+            console.error("MONGOOSE CONNECTION ERROR:", err);
+        });
+    })
+    .catch((err) => {
+        console.error("MONGOOSE INITIAL CONNECTION FAILED:", err.message);
+    });
+ 
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -57,10 +60,20 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: process.env.SECRET,
+    },
+    touchAfter: 24 * 3600, // 24hours
+});
 
-
+store.on("error", (err) => {
+    console.log("ERROR IN MONGO SESSION STORE", err);
+});
 const sessionOptions = {
-    secret: "mysupersecretcode",
+    store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie:{
@@ -88,10 +101,10 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get("/", WrapAsync(async (req, res,next) => {
-    const allListings = await listing.find({});
-    res.render("listings/index", { allListings });
-}));
+// app.get("/", WrapAsync(async (req, res,next) => {
+//     const allListings = await listing.find({});
+//     res.render("listings/index", { allListings });
+// }));
 
 
 

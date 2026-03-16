@@ -1,4 +1,7 @@
 {
+  "engines":{
+    "node": "22.14.0"
+  },
   "name": "wanderlust-project",
   "version": "1.0.0",
   "description": "",
@@ -11,8 +14,9 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "cloudinary": "^2.9.0",
+    "cloudinary": "^1.41.3",
     "connect-flash": "^0.1.1",
+    "connect-mongo": "^5.1.0",
     "dotenv": "^17.3.1",
     "ejs": "^4.0.1",
     "ejs-mate": "^4.0.0",
@@ -20,7 +24,7 @@
     "express-session": "^1.19.0",
     "joi": "^18.0.2",
     "method-override": "^3.0.0",
-    "mongoose": "^9.1.5",
+    "mongoose": "^8.7.3",
     "multer": "^2.1.1",
     "multer-storage-cloudinary": "^4.0.0",
     "nodemon": "^3.1.11",

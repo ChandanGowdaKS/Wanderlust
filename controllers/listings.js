@@ -1,8 +1,24 @@
 const listing = require("../models/listing");
 
 module.exports.index = async (req, res, next) => {
-    const allListings = await listing.find({});
-    res.render("listings/index", { allListings });
+    const location = (req.query.location || "").trim();
+    let allListings = [];
+
+    if (location) {
+        const escapedLocation = location.replaceAll(/[.*+?^${}()|[\]\\]/g, String.raw`\\$&`);
+        const locationRegex = new RegExp(escapedLocation, "i");
+
+        allListings = await listing.find({
+            $or: [
+                { location: locationRegex },
+                { country: locationRegex },
+            ],
+        }).sort({ location: 1, title: 1 });
+    } else {
+        allListings = await listing.find({}).sort({ location: 1, title: 1 });
+    }
+
+    res.render("listings/index", { allListings, searchLocation: location });
 };
 
 module.exports.renderNewForm = (req, res) => {

@@ -1,29 +1,84 @@
+<style>
+  .btn-search{
+    background-color: #fe424d;
+    color:#fff;
+    border-radius:25px;
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+  }
+  .btn-search:hover{
+     background-color: #fe424d;
+    color:#fff;
+  }
+  .btn-search i{
+    display:inline;
+    margin-right:0.5rem;
+  }
+  .search-inp{
+    border-radius:25px;
+    padding:0.5rem 1.1rem;
+    font-size:1rem;
+    background-color:#fff !important;
+    margin: 0 !important;
+  }
+  .navbar-search-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin: 0 1.5rem;
+    transform: translateX(-6.6rem);
+  }
+  .search-form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: min(100%, 520px);
+    margin: 0;
+  }
+  @media (max-width: 767.98px) {
+    .navbar-search-wrapper {
+      justify-content: flex-start;
+      margin: 0.75rem 0;
+      transform: none;
+    }
+    .search-form {
+      width: 100%;
+    }
+  }
+</style>
+
+
 <nav class="navbar navbar-expand-md bg-body-light border-bottom border-2 border-dark sticky-top ">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/"><i class="fa-regular fa-compass"></i></a>
+    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
     <button
       class="navbar-toggler"
       type="button"
       data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
+      data-bs-target="#navbarNavAltMarkup"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
 
-          <a class="nav-link " href="/">Home</a>
-          <a class="nav-link" href="/listings">All Listings</a>
+          
+          <a class="nav-link" href="/listings">Explore</a>
           <a class="nav-link" href="/listings/new">Create new list</a>
       </div>
-
+      <div class="navbar-search-wrapper">
+        <form class="search-form" role="search" method="GET" action="/listings">
+          <input class="form-control search-inp" type="search" name="location" value="<%= typeof searchLocation !== 'undefined' ? searchLocation : '' %>" placeholder="Search location" aria-label="Search location"/>
+          <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+        </form>
+      </div>
       <div class="navbar-nav ms-auto">
           <% if(!currUser){ %>
-              <a class="nav-link " href="/signup">Sign up</a>
-              <a class="nav-link" href="/login">Log in</a>
+              <a class="nav-link " href="/signup"><b>Sign up</b></a>
+              <a class="nav-link" href="/login"><b>Log in</b></a>
           <% } %>
           <% if(currUser){ %>
-            <a class="nav-link" href="/logout">Log out</a>
+            <a class="nav-link" href="/logout"><b>Log out</b></a>
           <% } %>
           
       </div>
