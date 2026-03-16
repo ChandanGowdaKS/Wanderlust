@@ -41,7 +41,11 @@ if (!dbUrl) {
     throw new Error("ATLASDB_URL is missing in environment variables");
 }
 
-mongoose.connect(dbUrl)
+const mongoOptions = process.env.NODE_ENV !== "production"
+    ? { tlsAllowInvalidCertificates: true }
+    : {};
+
+mongoose.connect(dbUrl, mongoOptions)
     .then(() => {
         console.log("DB connected");
         mongoose.connection.on("error", (err) => {
@@ -62,6 +66,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 const store = MongoStore.create({
     mongoUrl: dbUrl,
+    mongoOptions,
     crypto: {
         secret: process.env.SECRET,
     },

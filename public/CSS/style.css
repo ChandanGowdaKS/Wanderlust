@@ -64,6 +64,13 @@ body{
     border:none !important;
     margin-bottom:2rem;
 }
+
+/* responsive card grid */
+@media (max-width: 575.98px) {
+    .card-img-top {
+        height: 14rem !important;
+    }
+}
 .card-img-top{
     border-radius:1.2rem;
     opacity:1;
