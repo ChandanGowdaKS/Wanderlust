@@ -35,24 +35,21 @@
     width: min(100%, 520px);
     margin: 0;
   }
-  .mobile-brand-title {
+  .desktop-brand-title {
     display: none;
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: #fe424d;
+    white-space: nowrap;
+    margin-right: 1.5rem;
   }
-  @media (max-width: 767.98px) {
-    .mobile-brand-title {
+  @media (min-width: 992px) {
+    .desktop-brand-title {
       display: block;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 1.3rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      color: #fe424d;
-      pointer-events: none;
-      white-space: nowrap;
     }
   }
-  @media (max-width: 767.98px) {
+  @media (max-width: 991.98px) {
     /* white background for collapsed mobile menu */
     #navbarNavAltMarkup {
       background-color: #fff;
@@ -64,21 +61,19 @@
       transform: none;
       flex: unset;
       width: 100%;
+      display: none;
     }
     .search-form {
-      width: 100%;
-    }
-    .navbar-nav {
       width: 100%;
     }
   }
 </style>
 
 
-<nav class="navbar navbar-expand-md bg-body-light border-bottom border-2 border-dark sticky-top ">
+<nav class="navbar navbar-expand-lg bg-body-light border-bottom border-2 border-dark sticky-top ">
   <div class="container-fluid">
     <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
-    <span class="mobile-brand-title">Wanderlust</span>
+    <span class="desktop-brand-title">Wanderlust</span>
     <button
       class="navbar-toggler"
       type="button"
